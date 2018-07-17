@@ -198,7 +198,7 @@ div {
 #users li {
   margin: 20px 10px 20px 50px;
   line-height: 25px;
-  background-color: #e0e9c4;
+  background-color: #c4e9d3;
   padding: 15px 20px 5px;
   width: 200px;
   border-radius: 15%;
@@ -206,11 +206,11 @@ div {
 
 #users li i{
   margin-right: 15px;
-  color: #ff9800;
+  color: #000000;
 }
-#users li .status{
-    font-size: 80%;
-    color: #673AB7;
+
+#users li b{
+  color: #434dd9;
 }
 
 .message.typing .messageBody {
