@@ -2,6 +2,7 @@
   let nameInput = document.getElementById('usernameInput');
   let nicknameInput = document.getElementById('nicknameInput');
   let inputMessage = document.getElementById('inputMessage');
+  let counterMsg = document.getElementById('counter-msg');
   let loginButton = document.getElementById('button-enter');
   let sendMsgButton = document.getElementById('send-msg-btn');
   let messagesDiv = document.getElementById('messages');
@@ -18,6 +19,7 @@
     userNickname = nicknameInput.value || 'nickname' + Math.floor(Math.random() * 100);
     loginArea.style.display = 'none';
     chatArea.style.display = 'block';
+    nameInput.value = '', nicknameInput.value = '';
 
     let user = {
       name: userName,
@@ -53,7 +55,7 @@
   };
 
 
-
+  // request data function
   let ajaxRequest = (options) => {
     let url = options.url || '/';
     let method = options.method || 'GET';
@@ -73,7 +75,7 @@
 
   };
 
-
+  // get and update users data
   let getUsers = () => {
     ajaxRequest({
       url: '/users',
@@ -91,7 +93,7 @@
 
   };
 
-
+  // get and update messages data
   let getMessages = () => {
     ajaxRequest({
       url: '/messages',
@@ -99,9 +101,10 @@
       callback: (msg) => {
         msg = JSON.parse(msg);
         messages.innerHTML = '';
+        let length = msg.length;
         for (var i in msg) {
           if (msg.hasOwnProperty(i)) {
-            displayOneMsg(msg[i], userNickname);
+            displayOneMsg(msg[i], userNickname, length);
           }
         }
       }
@@ -109,6 +112,8 @@
 
   };
 
+
+  //update all data
   let getData = () => {
     getMessages();
     getUsers();
@@ -117,24 +122,41 @@
 
 
   //display Message
-  function displayOneMsg(msg, nickname) {
+  function displayOneMsg(msg, nickname, length) {
     if (msg.message != '') {
       let elem = document.createElement('div');
       if (msg.message.indexOf('@' + nickname + ' ') !== -1) {
         elem.style.backgroundColor = "#dadada";
       }
 
-      elem.innerHTML = `<span>${msg.name} <b>@${msg.nickname}</b><br> <i>${msg.time} </i></span><text>${msg.message}</text>`;
+      if (nickname == msg.nickname) {
+        elem.innerHTML = `<text class="right-message">${msg.message}</text><span>${msg.name} <b>@${msg.nickname}</b><br> <i>${msg.time} </i></span>`;
+        elem.style.gridTemplateColumns = '1fr 200px';
+      }
+      else {
+        elem.innerHTML = `<span>${msg.name} <b>@${msg.nickname}</b><br> <i>${msg.time} </i></span><text>${msg.message}</text>`;
+      }
+
       messagesDiv.appendChild(elem);
+      counterMsg.innerHTML = length;
+
+      //auto scroll to bottom
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
   }
 
   //display User
   function displayOneUser(user) {
     let elem = document.createElement('div');
-    elem.innerHTML = `<li><i class="fa fa-user"></i>${user.name} <br><b>@${user.nickname}</b></li>`;
-    userDiv.appendChild(elem);
 
+    if (userNickname == user.nickname) {
+      elem.innerHTML = `<li><i class="fa fa-user"></i>${user.name}&nbsp;<b>(me)</b><br><b>@${user.nickname}</b></li>`;
+    }
+    else {
+      elem.innerHTML = `<li><i class="fa fa-user"></i>${user.name} <br><b>@${user.nickname}</b></li>`;
+    }
+
+    userDiv.appendChild(elem);
   }
 
 

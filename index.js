@@ -10,7 +10,7 @@ let messages = [], users = [];
 // Routing
 app.use(bodyParser.json());
 
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
@@ -25,22 +25,22 @@ app.get('/public/script.js', (req, res) => {
 });
 
 app.get('/messages', (req, res) => {
-  res.json(messages);
+  res.status(200).json(messages);
 });
 
 app.post('/messages', (req, res) => {
   saveNewMessage(req.body);
+  res.end();
 });
 
 app.get('/users', (req, res) => {
-  res.json(users);
+  res.status(200).json(users);
 });
 
 app.post('/users', (req, res) => {
   addNewUser(req.body);
+  res.end();
 });
-
-
 
 
 //save new message in the history function

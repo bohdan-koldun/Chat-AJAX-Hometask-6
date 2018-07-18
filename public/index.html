@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Chat Socket.IO - Hometask Bohdan Koldun</title>
+  <title>Chat AJAX - Hometask Bohdan Koldun</title>
   <link rel="stylesheet" href="/public/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,7 +14,12 @@
 
     <!-- Chat -->
     <div class="chat page">
-      <div class="header-chat">Chat&nbsp; &nbsp;<i class="fa fa-commenting"></i></div>
+      <div class="header-chat">
+        Chat&nbsp; &nbsp;
+        <i class="fa fa-commenting"></i>
+        <div style="display:inline; margin-left: 40px;">
+          <span id="counter-msg">0</span>/100</div>
+      </div>
       <div class="chatArea">
         <div id="users"></div>
         <div id="messages"></div>
