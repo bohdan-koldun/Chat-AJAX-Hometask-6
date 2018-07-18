@@ -125,7 +125,9 @@
   function displayOneMsg(msg, nickname, length) {
     if (msg.message != '') {
       let elem = document.createElement('div');
-      if (msg.message.indexOf('@' + nickname + ' ') !== -1) {
+      let regExp = new RegExp(`(^|\\s)@${nickname}(\\s|$)`);
+
+      if (msg.message.search(regExp) !== -1) {
         elem.style.backgroundColor = "#dadada";
       }
 
